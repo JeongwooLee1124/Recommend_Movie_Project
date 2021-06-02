@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title  %}
+나만의 영화 리스트
+{% endblock  %}
+
+{% block lead  %}
+영화 정보에 들어가서 Favorite 버튼을 눌러주세요!
+{% endblock  %}
+
+{% block content %}
+{% if favorite %}
+<div class="mycontainer">
+  <div class=results>
+    {% for res in favorite %}
+    <a class=result-box href="{{ url_for('favorite.favorite', id=res.id) }}">
+      {%if res.cover %}
+      <div class="card mb-3" style="width: 740px;">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img src="{{ res.cover }}" class="card-img-top">
+          </div>
+      {% endif %}
+          <div class="col-md-8">
+            <div class="card-body">
+                <h3 class=card-title><b>{{res.title}}</b>, ({{res.year}})</h3>
+                <br></br>
+                <h5 class="card-text">Rating : {{res.rating}}</h5>
+                <h6 class="card-text">Genres : {{res.genre}}</h6>
+                <br></br>
+                <form method="POST">
+                  <input name="delete_movie" style="display:none;" value="{{res.id}}"/>
+                  <input name="Deletebutton" type="submit" class="btn btn-primary" value="Delete" />
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+{% endblock %}

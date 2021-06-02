@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+
+{% block title  %}
+Movie Search
+{% endblock  %}
+
+{% block lead  %}
+Only English - input imdb movies names
+{% endblock  %}
+
+{% block main_body %}
+<div class="search_body">
+  <div class="mycontainer">
+    <form class="search" action="{{ url_for('main.search') }}" method="get">
+      <input name="moviename" type=text class="form-control" style="margin-bottom:10px" placeholder="Search for Movies"/>
+      <input type="submit" class="btn btn-primary btn-sm btn-block" value="검색" />
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+{% if results %}
+<h3>Search results: {{search_name}}</h3>
+<br></br>
+<div class="mycontainer">
+  <div class=results>
+    {% for res in results %}
+    <a class=result-box href="{{ url_for('main.info', id=res['id']) }}">
+      {%if res['cover'] %}
+      <div class="card mb-3" style="width: 740px;">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img src="{{ res['cover'] }}" class="card-img-top">
+          </div>
+      {% endif %}
+          <div class="col-md-8">
+            <div class="card-body">
+                <h3 class=card-title><b>{{res['title']}}</b>, ({{res['year']}})</h3>
+                <br></br>
+                <h5 class="card-text">Rating : {{res['rating']}}</h5>
+                <h6 class="card-text">Genres : {{res['genre']}}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+{% endblock %}

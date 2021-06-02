@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block alert %}
+{% if alert_msg %}
+<div class="alert alert-{{ alert_msg.type }}" role="alert">
+  {{ alert_msg.msg }}
+</div>
+{% endif %}
+{% endblock %}
+
+{% block title %}
+Movie Recommend
+{% endblock %}
+
+{% block lead %}
+Only English - input imdb movies names
+{% endblock %}
+
+{% block main_body %}
+<div class="search_body">
+  <div class="mycontainer">
+    <form class="search" action="{{ url_for('recommend.main') }}" method="post">
+      <input name="movie_name" type=text class="form-control" style="margin-bottom:10px" placeholder="Recommend for Movies"/>
+      <input type="submit" class="btn btn-primary btn-sm btn-block" value="검색" />
+    </form>
+  </div>
+</div>
+
+</div>
+<div id="loader" class="text-center">
+<div class="results">
+<h2 id="name" class="text-uppercase"></h2>
+{% endblock %}
+
+{% block content %}
+{% if msg %}
+<h3>{{msg}}</h3>
+{% endif %}
+{% if results %}
+<h3>Search results: {{search_name}}</h3>
+<br></br>
+<div class="mycontainer">
+  <div class=results>
+    {% for res in results %}
+    <a class=result-box href="{{ url_for('main.info', id=res['id']) }}">
+      {%if res['cover'] %}
+      <div class="card mb-3" style="width: 740px;">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img src="{{ res['cover'] }}" class="card-img-top">
+          </div>
+      {% endif %}
+          <div class="col-md-8">
+            <div class="card-body">
+                <h3 class=card-title><b>{{res['title']}}</b>, ({{res['year']}})</h3>
+                <br></br>
+                <h5 class="card-text">Rating : {{res['rating']}}</h5>
+                <h6 class="card-text">Genres : {{res['genres']}}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+{% endblock %}

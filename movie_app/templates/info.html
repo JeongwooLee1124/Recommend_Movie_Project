@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}{{ movie['long title'] }}{% endblock %}
+
+{% block main_body %}
+<div class="mycontainer">
+    {% if movie['cover'] %}
+    <img class="poster" src="{{ movie['cover'] }}">
+    {% endif %}
+    <div class="infotext">
+      <div class="infotext-head">
+        <h1 class="movie-title">{{ movie['long title']}}</h1>
+      </div>
+      {% if movie['rating'] %}
+      <div class="rating">
+        <p class="rating-no">Rating: {{ movie['rating'] }}</p>
+      </div>
+      {% endif %}
+      <p class="genres">Genres: {{ movie['genres'] }} </p>
+      <p class="runtime">Runtim: {{ movie['runtime'] }}</p>
+      <p class="plot"> {{ movie['plot'] }} </p>
+      <p class="director">Director: {{ movie['director'] }}</p>
+      <p class="writer">Writer: {{ movie['writer'] }}</p> 
+      <form method="POST">
+        <input name="favoritemovie" style="display:none;" value="{{movie['id']}}"/>
+        <input name="favoritbutton" type="submit" class="btn btn-primary" value="Favorite" />
+    </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
